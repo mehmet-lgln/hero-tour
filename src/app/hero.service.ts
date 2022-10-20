@@ -3,18 +3,17 @@ import { catchError, Observable, of, tap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Hero } from './hero';
 import { MessageService } from './message.service';
-import { Heroes } from './mock-heroes';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HeroService {
 
-  constructor(
-    private http: HttpClient,
-    private messageService: MessageService) { }
+  constructor(private http: HttpClient, private messageService: MessageService) { }
 
   private heroesUrl = 'api/heroes'
+
+  httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) }
 
   getHeroes(): Observable<Hero[]> {
     return this.http.get<Hero[]>(this.heroesUrl)
@@ -25,11 +24,19 @@ export class HeroService {
 
   getHero(id: number): Observable<Hero> {
     // const hero = Heroes.find(h => h.id === id)!
-    const url = this.heroesUrl + `/${id}`
+    const url = this.heroesUrl + '/' + id
     return this.http.get<Hero>(url)
       .pipe(
         tap(_ => this.log(`fetched hero id: ${id}`)),
-        catchError(this.handleError<Hero>(''))
+        catchError(this.handleError<Hero>(`getHero id ${id}`))
+      )
+  }
+
+  updateHero(hero: Hero): Observable<any> {
+    return this.http.put(this.heroesUrl, hero, this.httpOptions)
+      .pipe(
+        tap(_ => this.log(`updated hero id ${hero.id}`)),
+        catchError(this.handleError('update Hero'))
       )
   }
 
