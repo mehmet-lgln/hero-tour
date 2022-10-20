@@ -32,6 +32,12 @@ export class HeroesComponent implements OnInit {
     this.heroService.getHeroes().subscribe(h => this.heroes = h)
   }
 
+  addHero(name: string){
+    name = name.trim()
+    if(!name) return;
+    this.heroService.addHero({ name } as Hero).subscribe(h => this.heroes.push(h))
+  }
+
   ngOnInit(): void {
     this.getHeroes()
   }

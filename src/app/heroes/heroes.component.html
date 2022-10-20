@@ -21,5 +21,11 @@
     </a>
   </li>
 </ul>
+<h2>Add Hero</h2>
+<div>
+  <label for="new-hero">Hero Name: </label>
+  <input type="text" id="new-hero" #heroName>
+  <button type="button" (click)="addHero(heroName.value); heroName.value=''">Add Hero</button>
+</div>
 
 <!-- <app-hero-detail [hero]="selectedHero"></app-hero-detail> -->
