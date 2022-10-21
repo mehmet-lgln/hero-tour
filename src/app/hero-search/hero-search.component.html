@@ -1,0 +1,11 @@
+<div>
+  <label for="search-text">Search</label>
+  <input type="text" id="search-text" #searchText placeholder="Search hero..." (input)="search(searchText.value)" >
+  <ul>
+    <li *ngFor="let h of heroes$ | async">
+      <a routerLink="/hero/{{h.id}}">
+        {{h.name}}
+      </a>
+    </li>
+  </ul>
+</div>
