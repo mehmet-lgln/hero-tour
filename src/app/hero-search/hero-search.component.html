@@ -1,7 +1,7 @@
-<div>
+<div id="search-component">
   <label for="search-text">Search</label>
   <input type="text" id="search-text" #searchText placeholder="Search hero..." (input)="search(searchText.value)" >
-  <ul>
+  <ul class="search-result">
     <li *ngFor="let h of heroes$ | async">
       <a routerLink="/hero/{{h.id}}">
         {{h.name}}
